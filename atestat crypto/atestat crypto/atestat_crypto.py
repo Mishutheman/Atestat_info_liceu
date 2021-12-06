@@ -86,7 +86,7 @@ class Window(Frame):
         
     def Reverse_crypt(self):
         cyphertext=""
-        i = len(message) - 1
+        i = len(self.plaintextRev) - 1
         while i>=0
             cyphertext+=self.plaintextRev[i]
             i=i-1
