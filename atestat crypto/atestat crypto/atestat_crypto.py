@@ -31,8 +31,9 @@ class Window(Frame):
     def exitProgram(self):
         exit()
 
-    def Caesar_encrypt(self,text,key):
-        print(text+" "+key)
+    def Caesar_encrypt(self,self.text,self.key):
+        
+        print(self.text+" "+self.key)
         cyphertext=""
         for char in text:
             if not char.isalpha():
@@ -43,7 +44,8 @@ class Window(Frame):
                 
                 else:
                     cyphertext += chr((ord(char) + s - 97) % 26 + 97)
-        return cyphertext
+        self.iesireCaesar.delete(0,END)
+        self.iesireCaesar.insert(END,cyphertext)
 
 
     def open_Caesar_win(self):
@@ -66,17 +68,31 @@ class Window(Frame):
         exitCaesar=self.exitbutton(Caesar)
 
         # trb sa vad care ii problema cu intrarea si iesirea
-        iesireCaesar=Text(Caesar,height=4,width=35)
-        iesireCaesar.place(x=20,y=315)
-
-
-        text=intCaesar.get("1.0",'end-1c')
-        key=intkey.get()
-        encButCaesar=Button(Caesar, text="Criptare",command=self.Caesar_encrypt(text,key))
+        self.iesireCaesar=Text(Caesar,height=4,width=35)
+        self.iesireCaesar.place(x=20,y=315)
+        
+        #aici am facut modificari
+        
+        self.text=intCaesar.get("1.0",'end-1c')
+        self.key=intkey.get()
+        key=int(key)
+        encButCaesar=Button(Caesar, text="Criptare",command=self.Caesar_encrypt(self.text,self.key))
         encButCaesar.place(x=20,y=280)
+        
 
-
-
+   
+        self.iesireRev.delete(0,END)
+        self.iesireRev.insert(END,cyphertext)
+        
+    def Reverse_crypt(self):
+        cyphertext=""
+        i = len(message) - 1
+        while i>=0
+            cyphertext+=self.plaintextRev[i]
+            i=i-1
+        self.IesireRev.delete(0,END)
+        self.IesireRev.insert(END,cyphertext)
+        
     def open_Reverse_win(self):
         Reverse=Toplevel(ecran)
         Reverse.geometry("930x600")
@@ -87,6 +103,15 @@ class Window(Frame):
         descriere=Label(Reverse,text='descriere Reverse',font=("Times New Roman",11))
         descriere.place (x=20,y=40)
         exitRev=self.exitbutton(Reverse)
+        
+        # LA REVERSE DE AICI IN JOS SI LA FCT PR ZISA
+        
+        self.plaintextRev=tk.StringVar()
+        self.IntrareRev=Text(Reverse,height=4,width=35,textvariable=self.plaintextRev)
+        self.IntrareRev.place(x=20,y=150)
+        self.IesireRev=Text(Reverse,height=4,width=35)
+        self.IesireRev.place(x=20,y=210)
+        encButRev=Button(Reverse,text="Criptare",command=self.Reverse_crypt())
 
 
     def open_Substitution_win(self):
