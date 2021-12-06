@@ -84,6 +84,8 @@ class Window(Frame):
         self.iesireRev.delete(0,END)
         self.iesireRev.insert(END,cyphertext)
         
+        
+        
     def Reverse_crypt(self):
         cyphertext=""
         i = len(self.plaintextRev) - 1
@@ -92,6 +94,7 @@ class Window(Frame):
             i=i-1
         self.IesireRev.delete(0,END)
         self.IesireRev.insert(END,cyphertext)
+        
         
     def open_Reverse_win(self):
         Reverse=Toplevel(ecran)
