@@ -53,18 +53,25 @@ class Window(Frame):
         Caesar.geometry("940x600")
         Caesar.title("Caesar")
         Caesar.resizable(width=False, height=False)
+        
         TitluCaesar=Label(Caesar,text="Cifrul Caesar", font=("Arial Black",15))
         TitluCaesar.place(x=20,y=10)
+        
         descriere=Label(Caesar,text='In criptografie, cifrul lui Cezar, numit si cifru cu deplasare, codul lui Cezar sau deplasarea lui Cezar, este una dintre cele mai simple tehnici de criptare. \n Este un tip de cifru al substitutiei, in care fiecare litera din textul initial este inlocuita cu o litera care se afla in alfabet la o distanta fixa fata de cea \n inlocuita. De exemplu, cu o deplasare de cinci pozitii in alfabetul limbii romane, A este inlocuit cu F, B devine G si asa mai departe. Aceasta metoda este \n numita asa dupa Iulius Cezar, care o folosea a comunica cu generalii sai. Acest cifru nu ofera securitate suficienta',font=("Times New Roman",11))
         descriere.place (x=20,y=40)
+        
         IntrareC=Label(Caesar,text="Introduceti textul")
         IntrareC.place(x=20,y=120)
+        
         intCaesar=Text(Caesar,height=4,width=35)
         intCaesar.place(x=20,y=150)
+        
         Intrarekey=Label(Caesar,text="Introduceti cheia (numar pozitiv)")
         Intrarekey.place(x=20,y=230)
+        
         intkey=Entry(Caesar)
         intkey.place(x=20,y=250)
+        
         exitCaesar=self.exitbutton(Caesar)
 
         # trb sa vad care ii problema cu intrarea si iesirea
@@ -110,10 +117,13 @@ class Window(Frame):
         # LA REVERSE DE AICI IN JOS SI LA FCT PR ZISA
         
         self.plaintextRev=tk.StringVar()
+        
         self.IntrareRev=Text(Reverse,height=4,width=35,textvariable=self.plaintextRev)
         self.IntrareRev.place(x=20,y=150)
+        
         self.IesireRev=Text(Reverse,height=4,width=35)
         self.IesireRev.place(x=20,y=210)
+        
         encButRev=Button(Reverse,text="Criptare",command=self.Reverse_crypt())
 
 
@@ -122,10 +132,13 @@ class Window(Frame):
         Substitution.geometry("930x600")
         Substitution.title("Substitution")
         Substitution.resizable(width=False, height=False)
+        
         TitluSubstitution=Label(Substitution,text="Cifrul Substitution", font=("Arial Black",15))
         TitluSubstitution.place(x=20,y=10)
+        
         descriere=Label(Substitution,text='descriere Substitutie',font=("Times New Roman",11))   
         descriere.place (x=20,y=40)
+        
         exitSub=self.exitbutton(Substitution)
  
 
@@ -134,10 +147,13 @@ class Window(Frame):
         Affine.geometry("930x600")
         Affine.title("Affine")
         Affine.resizable(width=False, height=False)
+        
         TitluAffine=Label(Affine,text="Cifrul Affine", font=("Arial Black",15))
         TitluAffine.place(x=20,y=10)
+        
         descriere=Label(Affine,text='descriere Affine',font=("Times New Roman",11))        
         descriere.place (x=20,y=40)
+        
         exitAff=self.exitbutton(Affine)
  
 
@@ -146,10 +162,13 @@ class Window(Frame):
         Vignere.geometry("930x600")
         Vignere.title("Vignere")
         Vignere.resizable(width=False, height=False)
+        
         TitluVignere=Label(Vignere,text="Cifrul Vignere", font=("Arial Black",15))
         TitluVignere.place(x=20,y=10)
+        
         descriere=Label(Vignere,text='descriere Vignere',font=("Times New Roman",11))
         descriere.place (x=20,y=40)
+        
         exitVig=self.exitbutton(Vignere)
 
 
