@@ -112,8 +112,10 @@ class Window(Frame):
     
 
 
+
+
     def Substitution_encrypt(self):
-        pass
+        text=self.intSub.get("1.0",'end-1c')
 
     def open_Substitution_win(self):
         Substitution=Toplevel(ecran)
@@ -125,11 +127,51 @@ class Window(Frame):
         descriere=Label(Substitution,text='descriere Substitutie',font=("Times New Roman",11))   
         descriere.place (x=20,y=40)
         exitSub=self.exitbutton(Substitution)
- 
 
 
+        #caseta de intrare pt mesaj necriptat
+        intrare=Label(Substitution,text="Introduceti mesajul necriptat")
+        intrare.place(x=20,y=80)
+        self.intSub=Text(Substitution,height=4,width=35)
+        self.intSub.place(x=20,y=160)
 
 
+        #caseta de intrare cheie la criptare
+        intkey1=Label(Substitution,text="Introduceti cheia")
+        intkey1.place(x=20,y=130)
+        self.intkey=Text(Substitution,height=1,width=30)
+        self.intkey.place(x=20,y=190)
+
+
+        #buton criptare
+        self.encSub=Button(Substitution,text="Criptare",command=self.Substitution_encrypt)
+        self.encSub.place(x=20,y=225)
+
+
+        #caseta iesire criptare
+        self.iesireSub=Text(Substitution,height=4,width=35)
+        self.iesireSub.place(x=20,y=260)
+
+
+        #caseta de intrare pt mesaj criptat
+        intrare1=Label(Substitution,text="Introduceti mesajul criptat")
+        intrare1.place(x=500,y=80)
+        self.intSub1=Text(Substitution,height=4,width=35)
+        self.intSub1.place(x=500,y=160)
+
+
+        #caseta de intrare cheie la decriptare
+        intkey1=Label(Substitution,text="Introduceti cheia")
+        intkey1.place(x=500,y=130)
+        self.intkey1=Text(Substitution,height=1,width=30)
+        self.intkey1.place(x=500,y=190)
+
+
+        #buton decriptare
+        self.decSub1=Button(Substitution,text="Decriptare",command=self.Substitution_encrypt)
+        self.decSub1.place(x=500,y=225)
+        self.iesireSub1=Text(Substitution,height=4,width=35)
+        self.iesireSub1.place(x=500,y=260)
 
 
 
