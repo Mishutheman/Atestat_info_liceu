@@ -14,7 +14,8 @@ class Window(Frame):
 
         analysisMenu = Menu(menu)
         analysisMenu.add_command(label="Analiza de frecventa",command=self.freq_analysis_win)
-        analysisMenu.add_command(label="Help")
+        analysisMenu.add_command(label="Help",command=self.help_win)
+        analysisMenu.add_command(label="Calcul invers modular",command=self.invmod_win)
         analysisMenu.add_command(label="Exit", command=self.exitProgram)
         menu.add_cascade(label="Options", menu=analysisMenu)
 
@@ -47,7 +48,7 @@ class Window(Frame):
 
     # Fct deschidere 
     # fereastra analiza de frecventa
-    # NU GATA
+    # NU GATA (probleme cu citirea si graficul)
     def freq_analysis_win(self):
         Freq=Toplevel(ecran)
         Freq.geometry("940x600")
@@ -62,10 +63,12 @@ class Window(Frame):
         self.analisebutton=Button(Freq,text="Analizeaza")#command=)
         self.analisebutton.place(x=20,y=120)
         
-        exitVig=self.exitbutton(Freq)
+        exitfrv=self.exitbutton(Freq)
+        menufrv=self.menu(Freq)
 
-
-
+    # Fct criptare/decriptare
+    # cifru Caesar
+    # GATA
     def Caesar_encrypt(self):
         text=self.intCaesar.get("1.0",'end-1c')
         cyphertext=""
@@ -91,7 +94,7 @@ class Window(Frame):
     # GATA
     def open_Caesar_win(self):
         Caesar=Toplevel(ecran)
-        Caesar.geometry("940x600")
+        Caesar.geometry("940x500")
         Caesar.title("Caesar")
         Caesar.resizable(width=False, height=False)
         TitluCaesar=Label(Caesar,text="Cifrul Caesar", font=("Arial Black",15))
@@ -111,7 +114,7 @@ class Window(Frame):
         self.intkey=Entry(Caesar)
         self.intkey.place(x=20,y=260)
 
-        exitCaesar=self.exitbutton(Caesar)
+        exitCaesar=Button(Caesar,text="Exit",command=Caesar.destroy).place(x=20,y=460)
 
         #caseta iesire text procesat
         self.iesireCaesar=Text(Caesar,height=4,width=50,wrap='word')
@@ -122,7 +125,11 @@ class Window(Frame):
         encButCaesar.place(x=20,y=290)
 
 
+        menuCaesar=self.menu(Caesar)
 
+    # Fct criptare/decriptare
+    # cifru Reverse
+    # GATA
     def Reverse_encrypt(self):
         text=self.intRev.get("1.0",'end-1c')
         cyphertext=""
@@ -137,26 +144,28 @@ class Window(Frame):
     # GATA
     def open_Reverse_win(self):
         Reverse=Toplevel(ecran)
-        Reverse.geometry("930x600")
+        Reverse.geometry("930x400")
         Reverse.title("Reverse")
         Reverse.resizable(width=False, height=False)
         TitluReverse=Label(Reverse,text="Cifrul Reverse", font=("Arial Black",15))
         TitluReverse.place(x=20,y=10)
-        descriere=Label(Reverse,text='descriere Reverse',font=("Times New Roman",11))
+        descriere=Label(Reverse,text='Criptarea cu ajutorul cifrului Reverse se realizeaza prin inversarea ordinii caracterelor mesajului introdus. Desi ofera securitate foarte slaba daca este \n folosit de unul singur, folosirea sa alaturi de alte metode de criptare poate crea un text surprinzator de sigur.',font=("Times New Roman",11))
         descriere.place (x=20,y=40)
 
         self.intRev=Text(Reverse,height=4,width=100,wrap='word')
         self.intRev.place(x=20,y=100)
-        self.encRev=Button(Reverse,text="Criptare",command=self.Reverse_encrypt)
+        self.encRev=Button(Reverse,text="Criptare/Decriptare",command=self.Reverse_encrypt)
         self.encRev.place(x=20,y=180)
         self.iesireRev=Text(Reverse,height=4,width=100,wrap='word')
         self.iesireRev.place(x=20,y=220)
-        exitRev=self.exitbutton(Reverse)
+        
+        exitRev=Button(Reverse,text="Exit",command=Reverse.destroy).place(x=20,y=360)
+
+        menuRev=self.menu(Reverse)
     
-
-
-
-
+    # Functie criptare 
+    # cifru Substitution
+    # GATA 
     def Substitution_encrypt(self):
         key=self.intkeyS.get("1.0",'end-1c')
         key=key.lower()
@@ -173,7 +182,9 @@ class Window(Frame):
         self.iesireSub.delete('1.0',END)
         self.iesireSub.insert(END,cyphertext)
 
-
+    # Functie decriptare 
+    # cifru Substitution
+    # GATA 
     def Substitution_decrypt(self):
         key=self.intkeyS1.get("1.0",'end-1c')
         key=key.lower()
@@ -193,17 +204,18 @@ class Window(Frame):
     
     # Fct deschidere 
     # fereastra cifrului Substitution
-    # GATA
+    # GATA (mai trebuie descrierea cifrului)
     def open_Substitution_win(self):
         Substitution=Toplevel(ecran)
-        Substitution.geometry("930x600")
+        Substitution.geometry("930x500")
         Substitution.title("Substitution")
         Substitution.resizable(width=False, height=False)
         TitluSubstitution=Label(Substitution,text="Cifrul Substitution", font=("Arial Black",15))
         TitluSubstitution.place(x=20,y=10)
         descriere=Label(Substitution,text='descriere Substitutie',font=("Times New Roman",11))   
         descriere.place (x=20,y=40)
-        exitSub=self.exitbutton(Substitution)
+
+        exitSub=Button(Substitution,text="Exit",command=Substitution.destroy).place(x=20,y=460)
 
 
         #caseta de intrare pt mesaj necriptat
@@ -250,57 +262,57 @@ class Window(Frame):
         self.iesireSub1=Text(Substitution,height=4,width=35,wrap='word')
         self.iesireSub1.place(x=500,y=330)
 
+        menuSub=self.menu(Substitution)
 
-
-
-
-    def egcd(self):
-        a=self.a
-        b=self.m
-        x,y, u,v = 0,1, 1,0
-        while a != 0:
-            q, r = b//a, b%a
-            m, n = x-u*q, y-v*q
-            b,a, x,y, u,v = a,r, u,v, m,n
-        gcd = b
-        return gcd, x, y
-
-
-    def modinv(self):
-        self.a=self.key[0]
-        self.b=26
-        gcd, x, y = self.egcd(self.a, self.m)
-        if gcd != 1:
-            return None
-            
-        else:
-            return x % m
-
+    # Functie criptare 
+    # cifru Affine
+    # GATA 
     def Affine_encrypt(self):
-        text=self.intAff.get("1.0",'end-1c')
-        key=self.intkeyA.get("1.0",'end-1c')
-        return ''.join([ chr((( key[0]*(ord(t) - ord('a')) + key[1] ) % 26)+ ord('a')) for t in text.replace(' ','') ])
+        self.text=self.intAff.get("1.0",'end-1c')
+        a=int(self.intkeyAa.get("1.0",'end-1c'))
+        b=int(self.intkeyAb.get("1.0",'end-1c'))
+        cyphertext=""
+        for char in self.text:
+            if char.isalpha():
+                nr=ord(char)
+                cyphertext+=chr((( a*(nr - 97) + b ) % 26)+ 97)
+            else:
+                cyphertext+=char
+        self.iesireAff.delete('1.0',END)
+        self.iesireAff.insert(END,cyphertext)
     
+
+    # Functie decriptare
+    # cifru Affine
+    # GATA
     def Affine_decrypt(self):
         self.cipher=self.intAff1.get("1.0",'end-1c')
-        self.key=self.intkeyV1.get("1.0",'end-1c')
-        return ''.join([ chr((( self.modinv()*(ord(c) - ord('a') - key[1])) % 26) + ord('a')) for c in cipher ])
-                       
+        inv=int(self.intkeyA1a.get("1.0",'end-1c'))
+        b=int(self.intkeyA1b.get("1.0",'end-1c'))
+        textinit=""
+        for char in self.cipher:
+            if char.isalpha():
+                textinit+=chr((( inv*(ord(char)-ord('a') - b) % 26)+ ord('a')))
+            else:
+                textinit+=char
+        self.iesireAff1.delete('1.0',END)
+        self.iesireAff1.insert(END,textinit)           
  
 
     # Fct deschidere 
     # fereastra cifrului Affine
-    # GATA
+    # GATA (mai trebuie descrierea cifrului)
     def open_Affine_win(self):
         Affine=Toplevel(ecran)
-        Affine.geometry("930x600")
+        Affine.geometry("930x500")
         Affine.title("Affine")
         Affine.resizable(width=False, height=False)
         TitluAffine=Label(Affine,text="Cifrul Affine", font=("Arial Black",15))
         TitluAffine.place(x=20,y=10)
         descriere=Label(Affine,text='descriere Affine',font=("Times New Roman",11))        
         descriere.place (x=20,y=40)
-        exitAff=self.exitbutton(Affine)
+
+        exitAffine=Button(Affine,text="Exit",command=Affine.destroy).place(x=20,y=460)
  
 
         #caseta de intrare pt mesaj necriptat
@@ -310,11 +322,15 @@ class Window(Frame):
         self.intAff.place(x=20,y=160)
 
 
-        #caseta de intrare cheie la criptare
-        intkey1=Label(Affine,text="Introduceti cheia (sub forma [a,b])")
+        #caseta de intrare valoare 'a' la criptare
+        intkey1=Label(Affine,text="Introduceti cheia (valoarea lui a in prima caseta, valoarea lui b in cea de-a doua)")
         intkey1.place(x=20,y=230)
-        self.intkeyA=Text(Affine,height=1,width=30)
-        self.intkeyA.place(x=20,y=260)
+        self.intkeyAa=Text(Affine,height=1,width=2)
+        self.intkeyAa.place(x=20,y=260)
+
+        #caseta de intrare valoare 'b' la criptare
+        self.intkeyAb=Text(Affine,height=1,width=2)
+        self.intkeyAb.place(x=60,y=260)
 
 
         #buton criptare
@@ -334,11 +350,15 @@ class Window(Frame):
         self.intAff1.place(x=500,y=160)
 
 
-        #caseta de intrare cheie la decriptare
-        intkey1=Label(Affine,text="Introduceti cheia")
+        #caseta de intrare valoare 'a' la decriptare
+        intkey1=Label(Affine,text="Introduceti cheia (valoarea lui a in prima caseta, valoarea lui b in cea de-a doua)")
         intkey1.place(x=500,y=230)
-        self.intkeyV1=Text(Affine,height=1,width=30)
-        self.intkeyV1.place(x=500,y=260)
+        self.intkeyA1a=Text(Affine,height=1,width=2)
+        self.intkeyA1a.place(x=500,y=260)
+
+        #caseta de intrare valoare 'b' la decriptare
+        self.intkeyA1b=Text(Affine,height=1,width=2)
+        self.intkeyA1b.place(x=540,y=260)
 
 
         #buton decriptare
@@ -346,6 +366,8 @@ class Window(Frame):
         self.decSub1.place(x=500,y=290)
         self.iesireAff1=Text(Affine,height=4,width=35,wrap='word')
         self.iesireAff1.place(x=500,y=330)
+
+        menuAff=self.menu(Affine)
 
 
     # Fct criptare
@@ -391,17 +413,18 @@ class Window(Frame):
      
     # Fct deschidere 
     # fereastra cifrului Vignere
-    # GATA
+    # GATA (mai trebuie descrierea cifrului)
     def open_Vignere_win(self):
         Vignere=Toplevel(ecran)
-        Vignere.geometry("930x600")
+        Vignere.geometry("930x500")
         Vignere.title("Vignere")
         Vignere.resizable(width=False, height=False)
         TitluVignere=Label(Vignere,text="Cifrul Vignere", font=("Arial Black",15))
         TitluVignere.place(x=20,y=10)
         descriere=Label(Vignere,text='descriere Vignere',font=("Times New Roman",11))
         descriere.place (x=20,y=40)
-        exitVig=self.exitbutton(Vignere)
+
+        exitVig=Button(Vignere,text="Exit",command=Vignere.destroy).place(x=20,y=460)
 
         #caseta de intrare pt mesaj necriptat
         intrare=Label(Vignere,text="Introduceti mesajul necriptat")
@@ -446,14 +469,89 @@ class Window(Frame):
         self.decVig1.place(x=500,y=290)
         self.iesireVig1=Text(Vignere,height=4,width=35,wrap='word')
         self.iesireVig1.place(x=500,y=330)
+        
+        menuVig=self.menu(Vignere)
 
-    def help_page(self):
+    # Functie fereastra help
+    # mai trebuie introduse date/text
+    def help_win(self):
         help=Toplevel(ecran)
         help.geometry("400x300")
         help.title("Help")
         help.resizable(width=False, height=False)
         exithelp=Button(help,text="Exit",command=help.destroy)
         exithelp.place(x=15,y=265)
+
+        menuhelp=self.menu(help)
+
+
+    # Functii de aflat inversul
+    # modular, ajuta la cifrul
+    # Affine
+    def xgcd(self,a,b):
+        prevx, x = 1, 0; prevy, y = 0, 1
+        while b:
+            q = a/b
+            x, prevx = prevx - q*x, x
+            y, prevy = prevy - q*y, y
+            a, b = b, a % b
+        return a, prevx, prevy
+
+    def modinv(self) -> int:
+        a=int(self.intinv.get("1.0",'end-1c')) 
+        g, x, y = self.xgcd(a, 26)
+        if g != 1:
+            self.iesinv.delete("1.0",END)
+            self.iesinv.insert(END,"NE")
+        else:
+            self.iesinv.delete("1.0",END)
+            self.iesinv.insert(END,int(pow(a, -1, 26)))
+
+
+    # Functie fereastra
+    # invers modular
+    # GATA  
+    def invmod_win(self):
+        invmod=Toplevel(ecran)
+        invmod.geometry("400x230")
+        invmod.title("Invers modular")
+        invmod.resizable(width=False, height=False)
+
+        indic=Label(invmod,text="Cu ajutorul acestei ferestre poti calcula inversul modular al unei \n variabile 'a' modulo 26")
+        indic.place(x=20,y=20)
+
+        indint=Label(invmod, text="Introduceti valoarea careia doriti sa ii aflati inversul modular").place(x=20,y=60)
+        self.intinv=Text(invmod,height=1,width=4)
+        self.intinv.place(x=20,y=90)
+
+        invbut=Button(invmod,text="Procesare invers modular",command=self.modinv).place(x=20,y=125)
+
+        iesint=Label(invmod, text="Inversul modular").place(x=20,y=160)
+        self.iesinv=Text(invmod,height=1,width=4)
+        self.iesinv.place(x=20,y=190)
+
+        menuinv=self.menu(invmod)
+
+
+
+    def menu(self,master):
+        menu = Menu(master)
+        master.config(menu=menu)
+
+        analysisMenu = Menu(menu)
+        analysisMenu.add_command(label="Analiza de frecventa",command=self.freq_analysis_win)
+        analysisMenu.add_command(label="Help",command=self.help_win)
+        analysisMenu.add_command(label="Calcul invers modular",command=self.invmod_win)
+        analysisMenu.add_command(label="Exit", command=self.exitProgram)
+        menu.add_cascade(label="Options", menu=analysisMenu)
+
+        cyphersMenu=Menu(menu)
+        cyphersMenu.add_command(label="Caesar",command=self.open_Caesar_win)
+        cyphersMenu.add_command(label="Reverse",command=self.open_Reverse_win)
+        cyphersMenu.add_command(label="Substitution",command=self.open_Substitution_win)
+        cyphersMenu.add_command(label="Affine",command=self.open_Affine_win)
+        cyphersMenu.add_command(label="Vignere",command=self.open_Vignere_win)
+        menu.add_cascade(label="Ciphers",menu=cyphersMenu)
 
     def exitbutton(self,master):
         Exitbutton=Button(master,text="Exit",command=master.destroy)
@@ -494,7 +592,7 @@ opt5.place(x=225,y=80)
 opt6=Button(ecran,text="Analiza de frecventa",width=17,height=3,font=('Helvetica',10,'bold'),command=app.freq_analysis_win)
 opt6.place(x=225,y=140)
 
-opt7=Button(ecran,text="Help",width=15,height=3,font=('Helvetica',10,'bold'),command=app.help_page)
+opt7=Button(ecran,text="Help",width=15,height=3,font=('Helvetica',10,'bold'),command=app.help_win)
 opt7.place(x=130,y=220)
 
 ecran.mainloop()
