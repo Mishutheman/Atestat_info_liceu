@@ -16,6 +16,7 @@ class Window(Frame):
         analysisMenu.add_command(label="Analiza de frecventa",command=self.freq_analysis_win)
         analysisMenu.add_command(label="Help",command=self.help_win)
         analysisMenu.add_command(label="Calcul invers modular",command=self.invmod_win)
+        analysisMenu.add_command(label="Calcul permutare inversa",command=self.invperm_win)
         analysisMenu.add_command(label="Exit", command=self.exitProgram)
         menu.add_cascade(label="Options", menu=analysisMenu)
 
@@ -165,46 +166,42 @@ class Window(Frame):
     
     # Functie criptare 
     # cifru Substitution
-    # GATA 
+    # GATA
     def Substitution_encrypt(self):
         key=self.intkeyS.get("1.0",'end-1c')
         key=key.lower()
         text=self.intSub.get("1.0",'end-1c')
+        text=text.lower()
         cyphertext=""
         for char in text:
             if not char.isalpha():
                 cyphertext+=char
             else:
-                if char.isupper():
-                    cyphertext+=key[ord(char)-65]
-                else:
-                    cyphertext+=key[ord(char)-97]
+                cyphertext+=key[ord(char)-97]
         self.iesireSub.delete('1.0',END)
         self.iesireSub.insert(END,cyphertext)
 
+
     # Functie decriptare 
     # cifru Substitution
-    # GATA 
+    # GATA
     def Substitution_decrypt(self):
         key=self.intkeyS1.get("1.0",'end-1c')
         key=key.lower()
-        text=self.intSub1.get("1.0",'end-1c')
-        cyphertext=""
-        for char in text:
+        cyphertext=self.intSub1.get("1.0",'end-1c')
+        text=""
+        for char in cyphertext:
             if not char.isalpha():
-                cyphertext+=char
+                text+=char
             else:
-                if char.isupper():
-                    cyphertext+=key[ord(char)-65]
-                else:
-                    cyphertext+=key[ord(char)-97]
+                text+=key[ord(char)-97]
         self.iesireSub1.delete('1.0',END)
-        self.iesireSub1.insert(END,cyphertext)
+        self.iesireSub1.insert(END,text)
 
     
     # Fct deschidere 
     # fereastra cifrului Substitution
-    # GATA (mai trebuie descrierea cifrului)
+    # GATA
     def open_Substitution_win(self):
         Substitution=Toplevel(ecran)
         Substitution.geometry("930x500")
@@ -212,7 +209,7 @@ class Window(Frame):
         Substitution.resizable(width=False, height=False)
         TitluSubstitution=Label(Substitution,text="Cifrul Substitution", font=("Arial Black",15))
         TitluSubstitution.place(x=20,y=10)
-        descriere=Label(Substitution,text='descriere Substitutie',font=("Times New Roman",11))   
+        descriere=Label(Substitution,text='Cifrul substitutiei este un tip de cifru in care fiecare caracter al unui mesaj este schimbat cu un alt caracter al unei chei criptografice. Ofera o securitate \n slaba, deoarece poate fi spart cu usurinta cu ajutorul analizei de frecventa a caracterelor.',font=("Times New Roman",11))   
         descriere.place (x=20,y=40)
 
         exitSub=Button(Substitution,text="Exit",command=Substitution.destroy).place(x=20,y=460)
@@ -517,8 +514,8 @@ class Window(Frame):
         invmod.title("Invers modular")
         invmod.resizable(width=False, height=False)
 
-        indic=Label(invmod,text="Cu ajutorul acestei ferestre poti calcula inversul modular al unei \n variabile 'a' modulo 26")
-        indic.place(x=20,y=20)
+        indic=Label(invmod,text="Cu ajutorul acestei ferestre poti calcula inversul modular al unei \n variabile 'a' modulo 26",font=("Times New Roman",10))
+        indic.place(x=20,y=15)
 
         indint=Label(invmod, text="Introduceti valoarea careia doriti sa ii aflati inversul modular").place(x=20,y=60)
         self.intinv=Text(invmod,height=1,width=4)
@@ -533,6 +530,51 @@ class Window(Frame):
         menuinv=self.menu(invmod)
 
 
+    # Incearca si refa 
+    # programu asta astfel incat
+    # sa mearga si cu chei de lungimi
+    # mai mici care au si simboluri
+    # si dupa da-l in pula
+    def inper(self):   
+        perm1=""
+        perm2=self.intinvper.get("1.0","end-1c")
+        for i in range(len(perm2)):
+            perm1+=chr(ord('a')+i)
+        q=list(perm1)
+        t=list(perm2)
+        for i in range(len(q)-1):
+            for j in range(i+1,len(q)):
+                if t[i]>t[j]:
+                    t[i],t[j]=t[j],t[i]
+                    q[i],q[j]=q[j],q[i] 
+        self.iesinvper.delete("1.0",END)
+        self.iesinvper.insert(END,''.join(q))
+
+
+    # Functie de calculare
+    # a permutarii inverse a
+    # unei chei compuse dintr-un
+    # numar de litere latine
+    def invperm_win(self):
+        invperm=Toplevel(ecran)
+        invperm.geometry("400x230")
+        invperm.title("Permutare inversa")
+        invperm.resizable(width=False, height=False)
+
+        indic=Label(invperm,text="Cu ajutorul acestei ferestre poti calcula permutarea inversa a unei \n chei folosita in criptarea cu cifrul Substitution.",font=("Times New Roman",10))
+        indic.place(x=20,y=15)
+
+        indint=Label(invperm, text="Introduceti cheia careia doriti sa ii aflati permutarea inversa").place(x=20,y=60)
+        self.intinvper=Text(invperm,height=1,width=30)
+        self.intinvper.place(x=20,y=90)
+
+        invperbut=Button(invperm,text="Procesare permutarea inversa",command=self.inper).place(x=20,y=125)
+
+        iesint=Label(invperm, text="Permutarea inversa").place(x=20,y=160)
+        self.iesinvper=Text(invperm,height=1,width=30)
+        self.iesinvper.place(x=20,y=190)
+
+        menuinv=self.menu(invperm)
 
     def menu(self,master):
         menu = Menu(master)
@@ -542,6 +584,7 @@ class Window(Frame):
         analysisMenu.add_command(label="Analiza de frecventa",command=self.freq_analysis_win)
         analysisMenu.add_command(label="Help",command=self.help_win)
         analysisMenu.add_command(label="Calcul invers modular",command=self.invmod_win)
+        analysisMenu.add_command(label="Calcul permutare inversa",command=self.invperm_win)
         analysisMenu.add_command(label="Exit", command=self.exitProgram)
         menu.add_cascade(label="Options", menu=analysisMenu)
 
@@ -552,6 +595,8 @@ class Window(Frame):
         cyphersMenu.add_command(label="Affine",command=self.open_Affine_win)
         cyphersMenu.add_command(label="Vignere",command=self.open_Vignere_win)
         menu.add_cascade(label="Ciphers",menu=cyphersMenu)
+
+
 
     def exitbutton(self,master):
         Exitbutton=Button(master,text="Exit",command=master.destroy)
